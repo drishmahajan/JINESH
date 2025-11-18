@@ -6,12 +6,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect MongoDB Atlas
 mongoose.connect("mongodb+srv://drishmahajan:mahajan12345@cluster0.bw9xzbi.mongodb.net/clientDB?retryWrites=true&w=majority")
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log("DB ERROR:", err));
 
-// Schema
+
 const clientSchema = new mongoose.Schema({
   clientName: String,
   pan: String,
@@ -22,7 +21,7 @@ const clientSchema = new mongoose.Schema({
 
 const Client = mongoose.model("Client", clientSchema);
 
-// POST - save data
+
 app.post("/api/client", async (req, res) => {
   try {
     console.log("📥 Received:", req.body);
@@ -36,10 +35,9 @@ app.post("/api/client", async (req, res) => {
   }
 });
 
-// GET - check backend
+
 app.get("/", (req, res) => {
   res.send("Backend working");
 });
 
-// Start server
 app.listen(5000, () => console.log("Server running on port 5000"));
