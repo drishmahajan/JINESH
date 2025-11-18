@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://drishmahajan:mahajan12345@cluster0.bw9xzbi.mongodb.net/clientDB?retryWrites=true&w=majority")
+mongoose.connect("MONGO DB PASSWORD")
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log("DB ERROR:", err));
 
