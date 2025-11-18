@@ -6,10 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/clientDB")
+// Connect MongoDB Atlas
+mongoose.connect("mongodb+srv://drishmahajan:mahajan12345@cluster0.bw9xzbi.mongodb.net/clientDB?retryWrites=true&w=majority")
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+  .catch(err => console.log("DB ERROR:", err));
 
 // Schema
 const clientSchema = new mongoose.Schema({
@@ -22,25 +22,23 @@ const clientSchema = new mongoose.Schema({
 
 const Client = mongoose.model("Client", clientSchema);
 
+// POST - save data
 app.post("/api/client", async (req, res) => {
   try {
-    console.log("📥 Received body:", req.body);
-
+    console.log("📥 Received:", req.body);
     const newClient = new Client(req.body);
     await newClient.save();
 
     res.json({ message: "Client data saved successfully!" });
-
   } catch (error) {
-    console.log("❌ SERVER ERROR:", error);
+    console.log("❌ ERROR:", error);
     res.status(500).json({ error: "Error saving data" });
   }
 });
 
-// GET - View all clients
-app.get("/api/client", async (req, res) => {
-  const clients = await Client.find();
-  res.json(clients);
+// GET - check backend
+app.get("/", (req, res) => {
+  res.send("Backend working");
 });
 
 // Start server
